@@ -15,13 +15,38 @@
 
         <!-- Styles -->
     </head>
+
     <body>
 
         <div class="container">
 
-            <div id="calendar">
+            {{ Form::open(['route'=> 'events.store','method'=>'post', 'role'=>'form']) }}
 
+            <div id="responsive-modal" class="modal fade" tabindex="=1" data-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <div class="modal-header">
+                            <h4>Registra nuovo evento</h4>
+
+                        </div>
+
+                        <div class="modal-body">
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal"></button>
+                            {!! Form::submit('GUARDAR',['class'=> 'btn btn-info pull-right']) !!}
+                        </div>
+
+                    </div>
+                </div>
             </div>
+
+            {{ Form::close() }}
+
+            <div id="calendar"></div>
 
         </div>
 
@@ -50,7 +75,14 @@
                 defaultDate: '2018-03-12',
                 navLinks: true, // can click day/week names to navigate views
                 editable: true,
-                eventLimit: true, // allow "more" link when too many events
+                selectable: true,
+                selectHelper: true,
+
+                select:function(start){
+                    start = moment(start.format());
+                    alert(start);
+                },
+              //  eventLimit: true, // allow "more" link when too many events
                 events: BASEURL + '/events'
             });
 
