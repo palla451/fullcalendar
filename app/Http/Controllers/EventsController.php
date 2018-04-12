@@ -14,9 +14,11 @@ class EventsController extends Controller
      */
     public function index()
     {
-        $data = Event::all();
+       $data = Event::get(['title','body','start','end','color']);
 
         return Response()->json($data);
+
+      //  return view('welcome');
     }
 
     /**
