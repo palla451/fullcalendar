@@ -21,6 +21,12 @@
                     <h4>NUOVO EVENTO</h4>
                 </div>
                 <div class="modal-body">
+
+                    <div class="form-group">
+                        {{ Form::label('title', 'TITOLO EVENTO') }}
+                        {{ Form::text('title', old('title'), ['class' => 'form-control']) }}
+                    </div>
+
                     <div class="form-group">
                         {{ Form::label('date_start', 'INIZIO EVENTO') }}
                         {{ Form::text('date_start', old('date_start'), ['class' => 'form-control', 'readonly'=>'true']) }}

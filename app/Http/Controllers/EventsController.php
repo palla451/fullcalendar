@@ -41,9 +41,11 @@ class EventsController extends Controller
     {
         $event = new Event();
         $event->title = $request->title;
-        $event->start = $event->date_start . ' ' . $request->time_start;
-        $event->end= $request->date_end;
+        $event->start = $request->date_start . ' ' . $request->time_start;
+        $event->end = $request->date_end;
+        $event->body = 'test';
         $event->color= $request->color;
+        //dd($event->start);
         $event->save();
 
         return redirect('/');
