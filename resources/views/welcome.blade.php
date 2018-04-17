@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dafault" data-dismiss="modal">CANCELAR</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELAR</button>
                     {!! Form::submit('INSERISCI', ['class' => 'btn btn-success']) !!}
                 </div>
             </div>
@@ -63,6 +63,59 @@
     </div>
     {{ Form::close() }}
     <div id='calendar'></div>
+
+    {{ Form::open(['route' => ['events.update', 1], 'method' => 'patch', 'role' => 'form']) }}
+    <div id="modal-event" class="modal fade" tabindex="-1" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>DETTAGLIO EVENTO</h4>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        {{ Form::label('_title', 'TITOLO EVENTO') }}
+                        {{ Form::text('_title', old('_title'), ['class' => 'form-control']) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ Form::label('_date_start', 'INIZIO EVENTO') }}
+                        {{ Form::text('_date_start', old('_date_start'), ['class' => 'form-control', 'readonly'=>'true']) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ Form::label('_time_start', 'ORA DI INIZIO') }}
+                        {{ Form::text('_time_start', old('_time_start'), ['class' => 'form-control']) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ Form::label('_date_end', 'FINE EVENTO') }}
+                        {{ Form::text('_date_end', old('_date_end'), ['class' => 'form-control']) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ Form::label('_color', 'COLORE') }}
+                        <div id="_colorpicker" type="text" class="input-group colorpicker-component">
+                            {{ Form::text('_color',old('_color'),['class'=>'form-control']) }}
+                            <span class="input-group-addon">
+                                <i></i>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="modal-footer">
+
+                    <a id="delete" data-href="{{ url('events') }}" data-id="" class="btn btn-danger">DELETE</a>
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">CANCELLA</button>
+                    {!! Form::submit('AGGIORNA', ['class' => 'btn btn-success']) !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ Form::close() }}
 
 </div>
 </body>
@@ -77,6 +130,7 @@
 
 <script>
     var BASEURL = "{{ url('/') }}";
+
     $(document).ready(function() {
 
         $('#calendar').fullCalendar({
@@ -98,7 +152,7 @@
 
             events: BASEURL + '/events',
 
-     /*       eventClick: function(event, jsEvent, view){
+            eventClick: function(event, jsEvent, view){
                 var date_start = $.fullCalendar.moment(event.start).format('YYYY-MM-DD');
                 var time_start = $.fullCalendar.moment(event.start).format('hh:mm:ss');
                 var date_end = $.fullCalendar.moment(event.end).format('YYYY-MM-DD hh:mm:ss');
@@ -111,12 +165,17 @@
                 $('#modal-event #_color').val(event.color);
                 $('#modal-event').modal('show');
             }
-    */
+
         });
 
     });
 
     $('#colorpicker').colorpicker({
+        format: 'hex',
+        default: 'trasparent'
+    });
+
+    $('#_colorpicker').colorpicker({
         format: 'hex',
         default: 'trasparent'
     });
@@ -134,11 +193,12 @@
     });
 
 
-   /*
+
     $('#delete').on('click', function(){
         var x = $(this);
         var delete_url = x.attr('data-href')+'/'+x.attr('data-id');
 
+      //  alert(delete_url);
         $.ajax({
             url: delete_url,
             type: 'DELETE',
@@ -154,7 +214,6 @@
         });
      });
 
-    */
 
     $(document).on('click', '.btn-update', function () {
         // Creamos un objeto de tipo FormData de Jquery para enviar los valores recuperados del evento
