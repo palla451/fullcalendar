@@ -205,7 +205,7 @@
             success: function(result){
                 $('#modal-event').modal('hide');
                 alert(result.message);
-                location.reload(true);//recarga de pagina
+                location.reload(true);//ricarica la pagina
             },
             error: function(result){
                 $('#modal-event').modal('hide');
